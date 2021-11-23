@@ -11,9 +11,6 @@ class Ostoskori:
             maara += tuote.lukumaara()
 
         return maara
-        # kertoo korissa olevien tavaroiden lukumäärän
-        # eli jos koriin lisätty 2 kpl tuotetta "maito", tulee metodin palauttaa 2 
-        # samoin jos korissa on 1 kpl tuotetta "maito" ja 1 kpl tuotetta "juusto", tulee metodin palauttaa 2 
 
     def hinta(self):
         hinta = 0
@@ -40,10 +37,7 @@ class Ostoskori:
                 return
 
     def tyhjenna(self):
-        pass
-        # tyhjentää ostoskorin
+        self.kori = []
 
     def ostokset(self):
         return self.kori
-        # palauttaa listan jossa on korissa olevat ostos-oliot
-        # kukin ostos-olio siis kertoo mistä tuotteesta on kyse JA kuinka monta kappaletta kyseistä tuotetta korissa on
