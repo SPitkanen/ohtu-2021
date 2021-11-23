@@ -24,7 +24,7 @@ class Ostoskori:
 
     def lisaa_tuote(self, lisattava: Tuote):
         for ostos in self.kori:
-            if ostos.tuotteen_nimi == lisattava.nimi:
+            if ostos.tuotteen_nimi() == lisattava.nimi():
                 ostos.muuta_lukumaaraa(1)
                 return
 
