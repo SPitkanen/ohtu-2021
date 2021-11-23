@@ -20,8 +20,13 @@ class Ostoskori:
         # kertoo korissa olevien ostosten yhteenlasketun hinnan
 
     def lisaa_tuote(self, lisattava: Tuote):
-        # lisää tuotteen
-        pass
+        for tuote in self.kori:
+            if tuote.tuotteen_nimi == lisattava.nimi:
+                tuote.muuta_lukumaaraa(1)
+                return
+
+        ostos = Ostos(lisattava)
+        self.kori.append(ostos)
 
     def poista_tuote(self, poistettava: Tuote):
         # poistaa tuotteen
