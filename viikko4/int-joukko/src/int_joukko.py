@@ -4,29 +4,33 @@ OLETUSKASVATUS = 5
 
 class IntJoukko:
     def __init__(self, kapasiteetti=None, kasvatuskoko=None):
-        if kapasiteetti is None:
+        if self.check_if_none(kapasiteetti):
             self.kapasiteetti = KAPASITEETTI
-        elif not isinstance(kapasiteetti, int) or kapasiteetti < 0:
-            raise Exception("Väärä kapasiteetti")  # heitin vaan jotain :D
         else:
             self.kapasiteetti = kapasiteetti
 
-        if kasvatuskoko is None:
+        if self.check_if_none(kasvatuskoko):
             self.kasvatuskoko = OLETUSKASVATUS
-        elif not isinstance(kapasiteetti, int) or kapasiteetti < 0:
-            raise Exception("kapasiteetti2")  # heitin vaan jotain :D
         else:
             self.kasvatuskoko = kasvatuskoko
 
-        self.ljono = [0] * self.kapasiteetti
+        self.lukujono = [0] * self.kapasiteetti
 
         self.alkioiden_lkm = 0
+
+    def check_if_none(self, instance):
+        if instance is None:
+            return True
+        elif not isinstance(instance, int) or instance < 0:
+            raise Exception("Väärä kapasiteetti")
+        
+        return False
 
     def kuuluu(self, n):
         on = 0
 
         for i in range(0, self.alkioiden_lkm):
-            if n == self.ljono[i]:
+            if n == self.lukujono[i]:
                 on = on + 1
 
         if on > 0:
@@ -38,21 +42,21 @@ class IntJoukko:
         ei_ole = 0
 
         if self.alkioiden_lkm == 0:
-            self.ljono[0] = n
+            self.lukujono[0] = n
             self.alkioiden_lkm = self.alkioiden_lkm + 1
             return True
         else:
             pass
 
         if not self.kuuluu(n):
-            self.ljono[self.alkioiden_lkm] = n
+            self.lukujono[self.alkioiden_lkm] = n
             self.alkioiden_lkm = self.alkioiden_lkm + 1
 
-            if self.alkioiden_lkm % len(self.ljono) == 0:
-                taulukko_old = self.ljono
-                self.kopioi_taulukko(self.ljono, taulukko_old)
-                self.ljono = [0] * (self.alkioiden_lkm + self.kasvatuskoko)
-                self.kopioi_taulukko(taulukko_old, self.ljono)
+            if self.alkioiden_lkm % len(self.lukujono) == 0:
+                taulukko_old = self.lukujono
+                self.kopioi_taulukko(self.lukujono, taulukko_old)
+                self.lukujono = [0] * (self.alkioiden_lkm + self.kasvatuskoko)
+                self.kopioi_taulukko(taulukko_old, self.lukujono)
 
             return True
 
@@ -63,16 +67,16 @@ class IntJoukko:
         apu = 0
 
         for i in range(0, self.alkioiden_lkm):
-            if n == self.ljono[i]:
+            if n == self.lukujono[i]:
                 kohta = i  # siis luku löytyy tuosta kohdasta :D
-                self.ljono[kohta] = 0
+                self.lukujono[kohta] = 0
                 break
 
         if kohta != -1:
             for j in range(kohta, self.alkioiden_lkm - 1):
-                apu = self.ljono[j]
-                self.ljono[j] = self.ljono[j + 1]
-                self.ljono[j + 1] = apu
+                apu = self.lukujono[j]
+                self.lukujono[j] = self.lukujono[j + 1]
+                self.lukujono[j + 1] = apu
 
             self.alkioiden_lkm = self.alkioiden_lkm - 1
             return True
@@ -90,7 +94,7 @@ class IntJoukko:
         taulu = [0] * self.alkioiden_lkm
 
         for i in range(0, len(taulu)):
-            taulu[i] = self.ljono[i]
+            taulu[i] = self.lukujono[i]
 
         return taulu
 
@@ -139,12 +143,12 @@ class IntJoukko:
         if self.alkioiden_lkm == 0:
             return "{}"
         elif self.alkioiden_lkm == 1:
-            return "{" + str(self.ljono[0]) + "}"
+            return "{" + str(self.lukujono[0]) + "}"
         else:
             tuotos = "{"
             for i in range(0, self.alkioiden_lkm - 1):
-                tuotos = tuotos + str(self.ljono[i])
+                tuotos = tuotos + str(self.lukujono[i])
                 tuotos = tuotos + ", "
-            tuotos = tuotos + str(self.ljono[self.alkioiden_lkm - 1])
+            tuotos = tuotos + str(self.lukujono[self.alkioiden_lkm - 1])
             tuotos = tuotos + "}"
             return tuotos
